@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FaiChou/ImagePrewer"
+    "url": "https://github.com/FaiChou/ImagePrewer.git"
   },
   "version": "1.0.2",
   "author": "FaiChou",
@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/FaiChou/ImagePrewer/issues"
   },
-  "homepage": "https://github.com/FaiChou/ImagePrewer#readme",
+  "homepage": "https://github.com/FaiChou/ImagePrewer",
   "main": "index.js",
   "peerDependencies": {
     "react-native": "*"
