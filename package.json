@@ -18,13 +18,12 @@
   "bugs": {
     "url": "https://github.com/FaiChou/ImagePrewer/issues"
   },
-  "homepage": "https://github.com/FaiChou/ImagePrewer",
+  "homepage": "https://github.com/FaiChou/ImagePrewer#readme",
   "main": "index.js",
   "peerDependencies": {
     "react-native": "*"
   },
   "scripts": {
-    "lint": "eslint ./",
-    "prepare": "rm -rf android/build Example/android/build Example/android/app/build node_modules"
+    "lint": "eslint ./"
   }
 }
