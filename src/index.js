@@ -30,6 +30,7 @@ class ImagePreviewer extends React.Component {
     this._left = null;
   }
   componentWillMount() {
+    this.addAndroidListener();
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
@@ -40,7 +41,26 @@ class ImagePreviewer extends React.Component {
   }
   componentWillUnmount() {
     this.timer && clearTimeout(this.timer);
+    this.removeAndroidListener();
   }
+  addAndroidListener = () => {
+    if (Platform.OS === 'android') {
+      BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
+    }
+  }
+  removeAndroidListener = () => {
+    if (Platform.OS === 'android') {
+      BackHandler.removeEventListener('hardwareBackPress', this._onBackAndroid);
+    }
+  }
+  _onBackAndroid = () => {
+    if (this.state.modalVisible) {
+      this.closeModal();
+      return true;
+    }
+    return false;
+  }
+
   handlePanResponderGrant = () => {
     this.grantTime = Date.now();
     this._top = this.state.top;
