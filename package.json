@@ -23,6 +23,9 @@
   "peerDependencies": {
     "react-native": "*"
   },
+  "dependencies": {
+    "prop-types": "^15.5.8"
+  },
   "scripts": {
     "lint": "eslint ./"
   }

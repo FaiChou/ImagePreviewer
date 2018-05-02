@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   View,
   Modal,
@@ -10,7 +11,7 @@ import {
 const DOUBLE_TAP_INTERVAL = 300;
 const TAP_INTERVAL = 150;
 
-export default class ImagePreviewer extends React.Component {
+class ImagePreviewer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -176,3 +177,11 @@ export default class ImagePreviewer extends React.Component {
     );
   }
 }
+
+ImagePreviewer.propTypes = {
+  style: PropTypes.any,
+  resizeMode: PropTypes.string,
+  source: PropTypes.any.isRequired,
+};
+
+export default ImagePreviewer;
