@@ -1,5 +1,5 @@
 {
-  "name": "rc-image-previewer",
+  "name": "image-previewer",
   "description": "Preview single image on single tap",
   "keywords": [
     "image",
@@ -19,12 +19,23 @@
     "url": "https://github.com/FaiChou/ImagePrewer/issues"
   },
   "homepage": "https://github.com/FaiChou/ImagePrewer",
-  "main": "index.js",
-  "peerDependencies": {
-    "react-native": "*"
+  "devDependencies": {
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "jest": "^22.4.3",
+    "jest-react-native": "^18.0.0",
+    "react-test-renderer": "16.3.1"
   },
   "scripts": {
-    "lint": "eslint ./",
-    "prepare": "rm -rf android/build Example/android/build Example/android/app/build node_modules"
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "test": "jest"
   },
+  "jest": {
+    "preset": "react-native"
+  },
+  "dependencies": {
+    "react": "16.3.1",
+    "react-native": "~0.55.2"
+  }
 }

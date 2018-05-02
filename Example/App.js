@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import ImagePreviewer from './ImagePreviewer';
+import ImagePreviewer from '../src';
 import MountHuang from './MountHuang.png';
 const { width } = Dimensions.get('window');
 
