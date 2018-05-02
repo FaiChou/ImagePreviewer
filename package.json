@@ -1,7 +1,25 @@
 {
   "name": "ImagePreviewer",
+  "description": "Preview single image on single tap",
+  "keywords": [
+    "image",
+    "preview",
+    "image preview",
+    "zoom",
+    "react-native"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FaiChou/ImagePrewer"
+  },
   "version": "0.1.0",
   "private": true,
+  "author": "FaiChou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FaiChou/ImagePrewer/issues"
+  },
+  "homepage": "https://github.com/FaiChou/ImagePrewer",
   "devDependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1",
     "jest": "^22.4.3",
