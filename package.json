@@ -13,7 +13,6 @@
     "url": "git+https://github.com/FaiChou/ImagePrewer"
   },
   "version": "0.1.0",
-  "private": true,
   "author": "FaiChou",
   "license": "MIT",
   "bugs": {
