@@ -10,15 +10,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/FaiChou/ImagePrewer.git"
+    "url": "https://github.com/FaiChou/ImagePreviewer.git"
   },
   "version": "1.2.0",
   "author": "FaiChou",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FaiChou/ImagePrewer/issues"
+    "url": "https://github.com/FaiChou/ImagePreviewer/issues"
   },
-  "homepage": "https://github.com/FaiChou/ImagePrewer",
+  "homepage": "https://github.com/FaiChou/ImagePreviewer",
   "main": "index.js",
   "peerDependencies": {
     "react-native": "*"
