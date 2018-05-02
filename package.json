@@ -26,5 +26,5 @@
   "scripts": {
     "lint": "eslint ./",
     "prepare": "rm -rf android/build Example/android/build Example/android/app/build node_modules"
-  },
+  }
 }
