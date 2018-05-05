@@ -4,6 +4,7 @@ import {
   View,
   Modal,
   Image,
+  Platform,
   PanResponder,
   TouchableWithoutFeedback,
 } from 'react-native';
