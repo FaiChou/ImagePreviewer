@@ -5,12 +5,22 @@ import {
   Modal,
   Image,
   Platform,
+  BackHandler,
   PanResponder,
   TouchableWithoutFeedback,
 } from 'react-native';
 
 const DOUBLE_TAP_INTERVAL = 300;
 const TAP_INTERVAL = 150;
+const CLOSE_MODAL_DELAY = 500;
+
+function coroutine(f) {
+  const o = f(); // instantiate the coroutine
+  o.next(); // execute until the first yield
+  return function(x) {
+    o.next(x);
+  };
+}
 
 class ImagePreviewer extends React.Component {
   constructor(props) {
@@ -21,14 +31,43 @@ class ImagePreviewer extends React.Component {
       top: 0,
       left: 0,
     };
-    this.isDoubleClick = false;
-    this.grantTime = null;
-    this.releaseTime = null;
-    this.lastReleaseTime = Date.now();
 
     this.timer = null;
-    this._top = null;
-    this._left = null;
+    const that = this;
+    this.loop = coroutine(function*() {
+      let e = {};
+      let lastUpTime = Date.now();
+      while (e = yield) {
+        if (e.type === 'touchdown') {
+          const downTime = Date.now();
+          const oldTop = that.state.top;
+          const oldLeft = that.state.left;
+          that.cancelCloseTaskIfNeeded();
+          while (e = yield) {
+            if (e.type === 'touchmove') {
+              const newTop = oldTop + e.gs.dy;
+              const newLeft = oldLeft + e.gs.dx;
+              that.handleMove({ top: newTop, left: newLeft});
+            }
+            if (e.type === 'touchup') {
+              const upTime = Date.now();
+              if (upTime - downTime > TAP_INTERVAL) break; // if not fast tap
+              if (upTime - lastUpTime > DOUBLE_TAP_INTERVAL) {
+                lastUpTime = Date.now();
+                that.timer = setTimeout(
+                  () => { that.closeModalIfNeeded(); },
+                  CLOSE_MODAL_DELAY
+                );
+                break;
+              } else {
+                that.zoom();
+                break;
+              }
+            }
+          }
+        }
+      }
+    });
   }
   componentWillMount() {
     this.addAndroidListener();
@@ -62,44 +101,18 @@ class ImagePreviewer extends React.Component {
     return false;
   }
 
+  handleMove = (offset) => {
+    this.setState(offset);
+  }
+
   handlePanResponderGrant = () => {
-    this.grantTime = Date.now();
-    this._top = this.state.top;
-    this._left = this.state.left;
+    this.loop({ type: 'touchdown' });
   }
   handlePanResponderMove = (evt, gs) => {
-    console.log('dx: ', gs.dx, ' ', 'dy:', gs.dy);
-    this.setState({
-      top: this._top + gs.dy,
-      left: this._left + gs.dx
-    });
+    this.loop({ type: 'touchmove', gs });
   }
-  handlePanResponderRelease = (evt, gs) => {
-    this.releaseTime = Date.now();
-    const tDiff = this.releaseTime - this.grantTime;
-    console.log('tap interval: ', tDiff);
-    if (tDiff < TAP_INTERVAL) { // fast tap
-      if (
-        this.releaseTime - this.lastReleaseTime < DOUBLE_TAP_INTERVAL
-      ) {
-        // double tap
-        this.isDoubleClick = true;
-        this.zoom();
-        // return;
-      } else {
-        // single tap
-        this.isDoubleClick = false;
-        this.timer = setTimeout(
-          () => { this.closeModalIfNeeded(); },
-          500
-        );
-      }
-      this.lastReleaseTime = Date.now();
-    }
-    // this.setState({
-    //   top: this._top + gs.dy,
-    //   left: this._left + gs.dx
-    // });
+  handlePanResponderRelease = () => {
+    this.loop({ type: 'touchup' });
   }
   zoom = () => {
     // this.setState(prevState => ({
@@ -122,11 +135,11 @@ class ImagePreviewer extends React.Component {
       left: 0,
     });
   }
+
+  cancelCloseTaskIfNeeded = () => {
+    this.timer && clearTimeout(this.timer);
+  }
   closeModalIfNeeded = () => {
-    console.log('closeModalIfNeeded');
-    if (this.isDoubleClick) {
-      return;
-    }
     this.closeModal();
   }
   showModal = () => {
@@ -156,12 +169,12 @@ class ImagePreviewer extends React.Component {
             ...style,
           }}>
             <Image style={{
-                flex: 1,
-                width: style.width || undefined,
-                height: style.height || undefined,
-              }}
-              resizeMode={resizeMode || 'contain'}
-              source={source} />
+              flex: 1,
+              width: style.width || undefined,
+              height: style.height || undefined,
+            }}
+            resizeMode={resizeMode || 'contain'}
+            source={source} />
           </View>
         </TouchableWithoutFeedback>
         <Modal
@@ -179,18 +192,18 @@ class ImagePreviewer extends React.Component {
             backgroundColor: 'black',
           }} {...this._panResponder.panHandlers}>
             <Image style={{
-                flex: 1,
-                position: 'absolute',
-                top,
-                left,
-                width: '100%',
-                height: '100%',
-                transform: [
-                  {scale},
-                ]
-              }}
-              resizeMode={'contain'}
-              source={source}
+              flex: 1,
+              position: 'absolute',
+              top,
+              left,
+              width: '100%',
+              height: '100%',
+              transform: [
+                {scale},
+              ]
+            }}
+            resizeMode={'contain'}
+            source={source}
             />
           </View>
         </Modal>
