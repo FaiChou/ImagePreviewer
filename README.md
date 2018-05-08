@@ -2,6 +2,7 @@
 
 ![image-previewer-demo](http://o7bkcj7d7.bkt.clouddn.com/image-previewer-demo.gif)
 
+[Demo gif here if not loaded.](http://o7bkcj7d7.bkt.clouddn.com/image-previewer-demo.gif)
 
 ### How to use
 
