@@ -4,8 +4,6 @@ import {
   View,
   Modal,
   Image,
-  Platform,
-  BackHandler,
   PanResponder,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -70,7 +68,6 @@ class ImagePreviewer extends React.Component {
     });
   }
   componentWillMount() {
-    this.addAndroidListener();
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
@@ -81,34 +78,22 @@ class ImagePreviewer extends React.Component {
   }
   componentWillUnmount() {
     this.timer && clearTimeout(this.timer);
-    this.removeAndroidListener();
-  }
-  addAndroidListener = () => {
-    if (Platform.OS === 'android') {
-      BackHandler.addEventListener('hardwareBackPress', this._onBackAndroid);
-    }
-  }
-  removeAndroidListener = () => {
-    if (Platform.OS === 'android') {
-      BackHandler.removeEventListener('hardwareBackPress', this._onBackAndroid);
-    }
-  }
-  _onBackAndroid = () => {
-    if (this.state.modalVisible) {
-      this.closeModal();
-      return true;
-    }
-    return false;
   }
 
   handleMove = (offset) => {
     this.setState(offset);
   }
 
-  handlePanResponderGrant = () => {
+  handlePanResponderGrant = ({ nativeEvent: { touches } }) => {
     this.loop({ type: 'touchdown' });
   }
-  handlePanResponderMove = (evt, gs) => {
+  handlePanResponderMove = ({ nativeEvent }, gs) => {
+    // console.log('nativeEvent:', nativeEvent.changedTouches);
+    // if (touches.length == 2) {
+    //   let touch1 = touches[0];
+    //   let touch2 = touches[1];
+    //   console.log('touches:', touches);
+    // }
     this.loop({ type: 'touchmove', gs });
   }
   handlePanResponderRelease = () => {
@@ -181,7 +166,7 @@ class ImagePreviewer extends React.Component {
           transparent
           animationType="fade"
           visible={this.state.modalVisible}
-          onRequestClose={() => {}}
+          onRequestClose={this.closeModal}
         >
           <View style={{
             position: 'absolute',
@@ -203,8 +188,7 @@ class ImagePreviewer extends React.Component {
               ]
             }}
             resizeMode={'contain'}
-            source={source}
-            />
+            source={source} />
           </View>
         </Modal>
       </View>
