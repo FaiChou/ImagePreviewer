@@ -147,6 +147,14 @@ class ImagePreviewer extends React.Component {
       top,
       left,
     } = this.state;
+    let flattenStyle = {};
+    if (typeof style === 'number') {
+      flattenStyle = StyleSheet.flatten([style]);
+    } else {
+      flattenStyle = style;
+    }
+    const width = flattenStyle.width || undefined;
+    const height = flattenStyle.height || undefined;
     return (
       <View>
         <TouchableWithoutFeedback onPress={this.showModal}>
@@ -155,8 +163,8 @@ class ImagePreviewer extends React.Component {
           }}>
             <Image style={{
               flex: 1,
-              width: style.width || undefined,
-              height: style.height || undefined,
+              width,
+              height,
             }}
             resizeMode={resizeMode || 'contain'}
             source={source} />
