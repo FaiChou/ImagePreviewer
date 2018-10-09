@@ -1,8 +1,8 @@
 ## ImagePreviewer [![Build Status](https://travis-ci.org/FaiChou/ImagePreviewer.svg?branch=master)](https://travis-ci.org/FaiChou/ImagePreviewer)[![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/rc-image-previewer)![license](https://img.shields.io/github/license/mashape/apistatus.svg)
 
-![image-previewer-demo](http://o7bkcj7d7.bkt.clouddn.com/image-previewer-demo.gif)
+![image-previewer-demo](http://p9qv3iwy5.bkt.clouddn.com/image-previewer-demo.gif)
 
-[Demo gif here if not loaded.](http://o7bkcj7d7.bkt.clouddn.com/image-previewer-demo.gif)
+[Demo gif here if not loaded.](http://p9qv3iwy5.bkt.clouddn.com/image-previewer-demo.gif)
 
 ### How to use
 
