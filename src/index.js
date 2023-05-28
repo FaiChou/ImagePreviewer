@@ -137,16 +137,8 @@ class ImagePreviewer extends React.Component {
     });
   }
   render() {
-    const {
-      style,
-      source,
-      resizeMode,
-    } = this.props;
-    const {
-      scale,
-      top,
-      left,
-    } = this.state;
+    const { style, source, resizeMode } = this.props;
+    const { scale, top, left } = this.state;
     let flattenStyle = {};
     if (typeof style === 'number') {
       flattenStyle = StyleSheet.flatten([style]);

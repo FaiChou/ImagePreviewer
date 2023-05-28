@@ -57,5 +57,3 @@ API name       | Usage
 style          | The style of element.
 source         | The image source, same as <Image /> source.
 resizeMode     | The image resize mode, default is contain.(Optional)
-
-
